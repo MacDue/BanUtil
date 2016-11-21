@@ -1,0 +1,26 @@
+
+plugins {
+    id 'java'
+    id 'idea'
+    // Allows running "gradle shadowJar" to create an executable JAR of your project
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
+group 'MacDue'
+version '1.0.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    jcenter()
+	maven {
+		url  "https://jitpack.io"
+	}
+}
+
+dependencies {
+  
+    compile "com.github.austinv11:Discord4j:2.6.1"
+    
+    //Discord4J logging
+    compile "ch.qos.logback:logback-classic:1.1.7"
+}
