@@ -14,4 +14,10 @@ public class DueCreature {
 		
 		
 	}
+	
+	
+	public void displayInfo(){
+		
+		
+	}
 }

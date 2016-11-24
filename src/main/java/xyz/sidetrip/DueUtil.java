@@ -10,6 +10,7 @@ public class DueUtil {
 	
 	public static void main(String[] args) throws DiscordException{
 		discordClient = getClient(BOT_ID);	
+		discordClient.getDispatcher().registerListener(new EventHandler());
 	}
 	
 	private static IDiscordClient getClient(String botToken) throws DiscordException
