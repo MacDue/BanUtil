@@ -1,4 +1,4 @@
-package xyz.sidetrip.commands;
+package xyz.sidetrip.commands.wizard;
 
 import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.util.DiscordException;

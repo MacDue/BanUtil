@@ -7,9 +7,10 @@ import org.apache.commons.collections4.map.DefaultedMap;
 
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
+import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
-import sx.blah.discord.util.RateLimitException;
+import sx.blah.discord.util.RequestBuffer;
 
 public class UtilDue {
 
@@ -39,13 +40,18 @@ public class UtilDue {
 		return serverKeys.get(server.getID());
 	}
 	
-	public static void sendMessage(IChannel channel, String message){
-		try {
-			channel.sendMessage(message);
-		} catch (MissingPermissionsException | RateLimitException
-				| DiscordException e) {
-			e.printStackTrace();
-		}
+	public static IMessage sendMessage(IChannel channel, String message){
+		RequestBuffer.RequestFuture<IMessage> future = RequestBuffer.request(() -> {
+			try{
+				return channel.sendMessage(message);
+			}catch (MissingPermissionsException e){
+				DueUtil.LOGGER.error("Something has gone horribly wrong!",e);
+			}catch (DiscordException e){
+				return sendMessage(channel,message);
+			}
+			return null;
+		});
+		return future.get();
 	}
 
 	public static boolean isDouble(String str) {

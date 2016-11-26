@@ -10,7 +10,6 @@ public class OnCommandEvent extends Event{
 	private final String command;
 	private final IUser sender;
 	private final String[] args;
-	
 	/**
 	 * 
 	 * @param command
@@ -18,7 +17,7 @@ public class OnCommandEvent extends Event{
 	 * @param message
 	 * @param sender
 	 */
-	public OnCommandEvent(String command, String[] args, IMessage message, IUser sender){
+	public OnCommandEvent(String command, String[] args,IMessage message, IUser sender){
 		this.command = command;
 		this.args = args;
 		this.message = message;

@@ -1,4 +1,4 @@
-package xyz.sidetrip.events;
+package xyz.sidetrip.commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +8,7 @@ import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
+import xyz.sidetrip.events.OnCommandEvent;
 
 public class CommandHandler {
 
@@ -20,14 +21,13 @@ public class CommandHandler {
 		String content = message.getContent();
 		if (!content.toLowerCase().startsWith(KEY))
 			return;
-
-		String[] args = getArgs(content.substring(KEY.length()));
-
+		String commandString = content.substring(KEY.length());
+		if (commandString.length() == 0)
+			return;
+		String[] args = getArgs(commandString);
 		OnCommandEvent commandEvent = new OnCommandEvent(args[0],
 				Arrays.copyOfRange(args, 1, args.length), message, author);
-
 		event.getClient().getDispatcher().dispatch(commandEvent);
-
 	}
 
 	/**

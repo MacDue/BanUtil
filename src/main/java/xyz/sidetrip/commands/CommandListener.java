@@ -4,11 +4,11 @@ import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
-import xyz.sidetrip.DueUtil;
-import xyz.sidetrip.Game;
+import xyz.sidetrip.commands.wizard.InputWizard;
+import xyz.sidetrip.commands.wizard.WizardQuestions;
 import xyz.sidetrip.events.OnCommandEvent;
 
-public class CommandEventListener implements IListener<OnCommandEvent> {
+public class CommandListener implements IListener<OnCommandEvent> {
 
 	@Override
 	public void handle(OnCommandEvent event) {
@@ -38,7 +38,7 @@ public class CommandEventListener implements IListener<OnCommandEvent> {
 			}
 			event.getClient().getDispatcher().registerListener(new InputWizard(
 					event.getMessage().getChannel(),
-					event.getMessage().getAuthor(), Game.TEST_QUESTIONS));
+					event.getMessage().getAuthor(), WizardQuestions.TEST_QUESTIONS));
 		}
 
 	}

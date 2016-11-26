@@ -1,6 +1,4 @@
-package xyz.sidetrip.commands;
-
-import org.apache.commons.lang3.math.NumberUtils;
+package xyz.sidetrip.commands.wizard;
 
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
@@ -9,13 +7,13 @@ import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
 import xyz.sidetrip.DueUtil;
 import xyz.sidetrip.UtilDue;
-import xyz.sidetrip.commands.WizardQuestion.AnswerType;
 import xyz.sidetrip.events.WizardEndEvent;
 /*
  * A simple wizzard to make long commands easy for new users.
  * Needs a link to what command handler it is for.
  * Needs an expire time.
  * Needs to block commands for user while in wizzard.
+ * Needs to have target for it's answers.
  */
 public class InputWizard {
 
@@ -57,37 +55,16 @@ public class InputWizard {
 		String content = message.getContent();
 		if (message.getAuthor() == target && message.getChannel() == channel) {
 			String answer = content;
-			switch (questions[questionNumber].getAnswerType()) {
-				case NUMBER :
-					if (UtilDue.isDouble(answer)) {
-						addAnswer(answer);
-						return;
-					}
-					break;
-				case STRING :
-					if (answer.length() > 0) {
-						addAnswer(answer);
-						return;
-					}
-					break;
-				case IMAGE :
-					break;// TODO url image return check.
-				case LONGNUMBER :
-					if (NumberUtils.isParsable(answer)) {
-						addAnswer(answer);
-						return;
-					}
-					break;
-				default :
-					break;
-			}
-			invalidAnswer(questions[questionNumber].getAnswerType());
+			if (questions[questionNumber].validAnswer(answer))
+				addAnswer(answer);
+			else
+				invalidAnswer(answer);
 		}
 	}
 
-	private void invalidAnswer(AnswerType type) {
-		UtilDue.sendMessage(channel, ":bangbang:**That's not a valid " + type
-				+ "!**\nCould you try again?");
+	private void invalidAnswer(String answer) {
+		UtilDue.sendMessage(channel,
+				":bangbang:**" + questions[questionNumber].getError(answer));
 		askQuestion();
 	}
 

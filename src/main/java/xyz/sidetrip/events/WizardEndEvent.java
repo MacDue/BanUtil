@@ -1,7 +1,7 @@
 package xyz.sidetrip.events;
 
 import sx.blah.discord.api.events.Event;
-import xyz.sidetrip.commands.InputWizard;
+import xyz.sidetrip.commands.wizard.InputWizard;
 
 public class WizardEndEvent extends Event{
 	
