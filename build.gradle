@@ -24,5 +24,9 @@ dependencies {
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
     //Discord4J logging
     compile "ch.qos.logback:logback-classic:1.1.7"
+	// https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
+	compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+
+    
 	   
 }
