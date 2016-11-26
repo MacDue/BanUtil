@@ -29,14 +29,14 @@ public class CommandEventListener implements IListener<OnCommandEvent> {
 				| DiscordException e) {
 			e.printStackTrace();
 		}
-		if (event.matchesCommand("wizzard")) {
+		if (event.matchesCommand("wizard")) {
 			try {
 				event.getMessage().reply("Starting test wizzard!");
 			} catch (MissingPermissionsException | RateLimitException
 					| DiscordException e) {
 				e.printStackTrace();
 			}
-			event.getClient().getDispatcher().registerListener(new InputWizzard(
+			event.getClient().getDispatcher().registerListener(new InputWizard(
 					event.getMessage().getChannel(),
 					event.getMessage().getAuthor(), Game.TEST_QUESTIONS));
 		}

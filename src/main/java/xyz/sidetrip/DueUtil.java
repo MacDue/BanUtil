@@ -4,7 +4,7 @@ import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.util.DiscordException;
 import xyz.sidetrip.commands.CommandEventListener;
-import xyz.sidetrip.commands.WizzardListener;
+import xyz.sidetrip.commands.WizardListener;
 import xyz.sidetrip.events.CommandHandler;
 import xyz.sidetrip.events.EventHandler;
 
@@ -21,7 +21,7 @@ public class DueUtil {
 		discordClient.getDispatcher().registerListener(new EventHandler());
 		discordClient.getDispatcher().registerListener(new CommandHandler());
 		discordClient.getDispatcher().registerListener(new CommandEventListener());
-		discordClient.getDispatcher().registerListener(new WizzardListener());
+		discordClient.getDispatcher().registerListener(new WizardListener());
 	}
 	
 	private static IDiscordClient getClient(String botToken) throws DiscordException

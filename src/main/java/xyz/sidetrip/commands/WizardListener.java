@@ -4,14 +4,14 @@ import sx.blah.discord.api.events.IListener;
 import sx.blah.discord.util.DiscordException;
 import sx.blah.discord.util.MissingPermissionsException;
 import sx.blah.discord.util.RateLimitException;
-import xyz.sidetrip.events.WizzardEndEvent;
+import xyz.sidetrip.events.WizardEndEvent;
 
-public class WizzardListener implements IListener<WizzardEndEvent> {
+public class WizardListener implements IListener<WizardEndEvent> {
 
 	@Override
-	public void handle(WizzardEndEvent event) {
+	public void handle(WizardEndEvent event) {
 		//Messy test code!
-		String[] answers = event.getWizzard().getAnswers();
+		String[] answers = event.getWizard().getAnswers();
 		String testReply = "**Wizard Answers:**\n";
 				
 		int count = 0;
@@ -22,7 +22,7 @@ public class WizzardListener implements IListener<WizzardEndEvent> {
 		if (count == 0)
 			testReply += "None";
 		try {
-			event.getWizzard().getChannel().sendMessage(testReply);
+			event.getWizard().getChannel().sendMessage(testReply);
 		} catch (MissingPermissionsException | RateLimitException
 				| DiscordException e) {
 			e.printStackTrace();
