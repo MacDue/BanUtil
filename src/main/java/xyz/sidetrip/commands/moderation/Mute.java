@@ -10,7 +10,7 @@ public class Mute extends ModCommand {
 	public Mute() {
 		super("mute");
 	}
-	
+
 	protected Mute(String name) {
 		super(name);
 	}

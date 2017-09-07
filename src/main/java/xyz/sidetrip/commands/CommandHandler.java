@@ -14,7 +14,7 @@ import xyz.sidetrip.BanUtil;
 import xyz.sidetrip.events.OnCommandEvent;
 
 public class CommandHandler {
-	
+
 	private static final String KEY = BanUtil.CONFIG.getPrefix();
 	private static Map<String, Command> commands = new HashMap<String, Command>();
 
@@ -33,13 +33,13 @@ public class CommandHandler {
 				Arrays.copyOfRange(args, 1, args.length), message, author);
 		event.getClient().getDispatcher().dispatch(commandEvent);
 	}
-	
+
 	public static void addCommand(Command command) {
 		String commandName = command.getName().toLowerCase();
 		if (commands.get(commandName) == null)
 			commands.put(commandName, command);
 	}
-	
+
 	public static Command getCommand(String commandName) {
 		return commands.get(commandName);
 	}

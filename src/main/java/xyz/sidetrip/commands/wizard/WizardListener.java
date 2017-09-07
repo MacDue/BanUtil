@@ -10,10 +10,10 @@ public class WizardListener implements IListener<WizardEndEvent> {
 
 	@Override
 	public void handle(WizardEndEvent event) {
-		//Messy test code!
+		// Messy test code!
 		String[] answers = event.getWizard().getAnswers();
 		String testReply = "**Wizard Answers:**\n";
-				
+
 		int count = 0;
 		for (String answer : answers) {
 			testReply += "``" + answer + "``\n";

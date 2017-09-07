@@ -15,7 +15,7 @@ public class Test extends Command {
 	public void execute(IMessage context, String... args) {
 		IChannel channel = context.getChannel();
 		UtilDue.sendMessage(channel, "Hello, world!");
-		for (String arg: args) {
+		for (String arg : args) {
 			UtilDue.sendMessage(channel, arg);
 		}
 	}

@@ -66,12 +66,15 @@ public class WizardQuestion {
 				if (!UtilDue.isDouble(answer))
 					return "'" + answerValueName + "' must be a number!";
 				else
-					return "'"+answerValueName + "' must be in the range "
+					return "'" + answerValueName + "' must be in the range "
 							+ minNumber + " to " + maxNumber + "!";
 			case STRING :
-				if(answer.length() == 0)
-					return "'"+answerValueName + "' must be at least one character!";
-				else return "'"+answerValueName + "' must be less than "+maxStringLength+" characters!";
+				if (answer.length() == 0)
+					return "'" + answerValueName
+							+ "' must be at least one character!";
+				else
+					return "'" + answerValueName + "' must be less than "
+							+ maxStringLength + " characters!";
 			case IMAGE :
 				return "The link given does not return an image!";
 			case LONGNUMBER :

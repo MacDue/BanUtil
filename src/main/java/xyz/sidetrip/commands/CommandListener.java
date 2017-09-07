@@ -18,29 +18,34 @@ public class CommandListener implements IListener<OnCommandEvent> {
 		IMessage message = event.getMessage();
 		IChannel channel = message.getChannel();
 		IUser author = message.getAuthor();
-		
-		if (message.getGuild().getLongID() 
-				!= BanUtil.CONFIG.getServer().getLongID()) 
-		{
+
+		if (message.getGuild().getLongID() != BanUtil.CONFIG.getServer()
+				.getLongID()) {
 			UtilDue.sendMessage(channel, "I only work for Due!");
 			return;
 		}
-		
+
 		Command command = CommandHandler.getCommand(event.getCommand());
 		if (command != null) {
 			RequestBuffer.request(() -> {
 				try {
-					if (author.getPermissionsForGuild(message.getGuild()).contains(Permissions.ADMINISTRATOR) 
+					if (author.getPermissionsForGuild(message.getGuild())
+							.contains(Permissions.ADMINISTRATOR)
 							|| command.canUse(author)) {
 						command.execute(message, event.getArgs());
 					} else {
-						UtilDue.sendMessage(channel, "You cannot use that command.");
+						UtilDue.sendMessage(channel,
+								"You cannot use that command.");
 					}
 				} catch (MissingPermissionsException missingPerms) {
-					UtilDue.sendMessage(channel, ":confounded: I don't have permission to do that!");
+					UtilDue.sendMessage(channel,
+							":confounded: I don't have permission to do that!");
 				} catch (Exception exeption) {
-					UtilDue.sendMessage(channel, ":interrobang: **Something went wrong!**");
-					BanUtil.LOGGER.error("Something went wrong in command '{}':", command.getName(), exeption);
+					UtilDue.sendMessage(channel,
+							":interrobang: **Something went wrong!**");
+					BanUtil.LOGGER.error(
+							"Something went wrong in command '{}':",
+							command.getName(), exeption);
 					// exeption.printStackTrace();
 				}
 			});

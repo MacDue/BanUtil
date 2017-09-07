@@ -6,14 +6,14 @@ import sx.blah.discord.handle.impl.events.ReadyEvent;
 
 public class EventHandler {
 	/*
-	 * Generic events class. This will contain all misc events that don't need proper
-	 * organization.
+	 * Generic events class. This will contain all misc events that don't need
+	 * proper organization.
 	 */
-	
+
 	@EventSubscriber
-	public void onReadyEvent(ReadyEvent event){
+	public void onReadyEvent(ReadyEvent event) {
 		IDiscordClient client = event.getClient();
-		client.changePlayingText("Banning tards!");
+		client.changePlayingText("banning tards!");
 	}
 
 }

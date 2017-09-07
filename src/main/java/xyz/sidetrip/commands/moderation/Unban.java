@@ -5,15 +5,15 @@ import sx.blah.discord.handle.obj.IUser;
 import xyz.sidetrip.Emojis;
 import xyz.sidetrip.UtilDue;
 
-public class Unban extends Ban{
-	
+public class Unban extends Ban {
+
 	public Unban() {
 		super("unban");
 	}
 
 	@Override
 	protected String getAction() {
-		return Emojis.BAN+" | Unbanne User";
+		return ":unicorn: | Unbanne User";
 	}
 
 	@Override

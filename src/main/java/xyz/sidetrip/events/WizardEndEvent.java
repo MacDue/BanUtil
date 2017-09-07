@@ -3,15 +3,15 @@ package xyz.sidetrip.events;
 import sx.blah.discord.api.events.Event;
 import xyz.sidetrip.commands.wizard.InputWizard;
 
-public class WizardEndEvent extends Event{
-	
+public class WizardEndEvent extends Event {
+
 	private final InputWizard wizard;
-	
-	public WizardEndEvent(InputWizard wizard){
+
+	public WizardEndEvent(InputWizard wizard) {
 		this.wizard = wizard;
 	}
-	
-	public InputWizard getWizard(){
+
+	public InputWizard getWizard() {
 		return wizard;
 	}
 

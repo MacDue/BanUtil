@@ -4,7 +4,7 @@ import sx.blah.discord.handle.obj.IMessage;
 import xyz.sidetrip.UtilDue;
 import xyz.sidetrip.commands.Command;
 
-public class Help extends Command{
+public class Help extends Command {
 
 	public Help() {
 		super("help");
@@ -12,7 +12,8 @@ public class Help extends Command{
 
 	@Override
 	public void execute(IMessage context, String... args) {
-		UtilDue.sendMessage(context.getChannel(), "If you need help (and are a mod) ask MacDue!");
+		UtilDue.sendMessage(context.getChannel(),
+				"If you need help (and are a mod) ask MacDue!");
 	}
 
 }

@@ -3,7 +3,7 @@ package xyz.sidetrip.commands.wizard;
 import xyz.sidetrip.commands.wizard.WizardQuestion.AnswerType;
 
 public class WizardQuestions {
-	
+
 	public static final WizardQuestion[] TEST_QUESTIONS = new WizardQuestion[]{
 			new WizardQuestion("What is your monsters name?", "Monster name",
 					32),
@@ -12,8 +12,8 @@ public class WizardQuestions {
 					"Quest proposition", 32),
 			new WizardQuestion(
 					"The following questions are for the base stats of your quest.\n"
-					+ "These are the quests stats at level 1.\n"
-					+ "What is the base attack of your monster?",
+							+ "These are the quests stats at level 1.\n"
+							+ "What is the base attack of your monster?",
 					"Base attack", AnswerType.NUMBER),
 			new WizardQuestion("What is the base strength of your monster?",
 					"Base strength", AnswerType.NUMBER),

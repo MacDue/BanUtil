@@ -22,9 +22,11 @@ import sx.blah.discord.util.RequestBuffer;
 
 public class UtilDue {
 
-	private static final Map<Long, String> serverKeys = new DefaultedMap<Long, String>("!");
+	private static final Map<Long, String> serverKeys = new DefaultedMap<Long, String>(
+			"!");
 
-	private static final DecimalFormat numberFormatter = new DecimalFormat("#,###");
+	private static final DecimalFormat numberFormatter = new DecimalFormat(
+			"#,###");
 
 	public static String formateFloat(float number) {
 		if (number == (long) number) {
@@ -45,53 +47,61 @@ public class UtilDue {
 	public static String getServerKey(IGuild server) {
 		return serverKeys.get(server.getLongID());
 	}
-	
-	public static IMessage sendMessage(IChannel channel, String message){
-		RequestBuffer.RequestFuture<IMessage> future = RequestBuffer.request(() -> {
-			try{
-				return channel.sendMessage(message);
-			}catch (MissingPermissionsException e){
-				BanUtil.LOGGER.error("Something has gone horribly wrong!",e);
-			}catch (DiscordException e){
-				return sendMessage(channel,message);
-			}
-			return null;
-		});
+
+	public static IMessage sendMessage(IChannel channel, String message) {
+		RequestBuffer.RequestFuture<IMessage> future = RequestBuffer
+				.request(() -> {
+					try {
+						return channel.sendMessage(message);
+					} catch (MissingPermissionsException e) {
+						BanUtil.LOGGER
+								.error("Something has gone horribly wrong!", e);
+					} catch (DiscordException e) {
+						return sendMessage(channel, message);
+					}
+					return null;
+				});
 		return future.get();
 	}
-	
+
 	public static boolean hasRole(IGuild server, IUser user, IRole role) {
 		List<IRole> roles = user.getRolesForGuild(server);
-		for (IRole userRole: roles) {
+		for (IRole userRole : roles) {
 			if (userRole.getLongID() == role.getLongID()) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public static boolean addRole(IGuild server, IUser user, IRole role) {
 		if (!hasRole(server, user, role)) {
 			IDiscordClient client = BanUtil.getClient();
-			PermissionUtils.requireHierarchicalPermissions(server, client.getOurUser(), user, Permissions.MANAGE_ROLES);
-			((DiscordClientImpl) client).REQUESTS.PUT.makeRequest(
-					DiscordEndpoints.GUILDS+server.getStringID()+"/members/"+user.getStringID()+"/roles/"+role.getStringID());
+			PermissionUtils.requireHierarchicalPermissions(server,
+					client.getOurUser(), user, Permissions.MANAGE_ROLES);
+			((DiscordClientImpl) client).REQUESTS.PUT
+					.makeRequest(DiscordEndpoints.GUILDS + server.getStringID()
+							+ "/members/" + user.getStringID() + "/roles/"
+							+ role.getStringID());
 			return true;
 		}
 		return false;
 	}
-	
+
 	public static boolean removeRole(IGuild server, IUser user, IRole role) {
 		if (hasRole(server, user, role)) {
 			IDiscordClient client = BanUtil.getClient();
-			PermissionUtils.requireHierarchicalPermissions(server, client.getOurUser(), user, Permissions.MANAGE_ROLES);
-			((DiscordClientImpl) client).REQUESTS.DELETE.makeRequest(
-					DiscordEndpoints.GUILDS+server.getStringID()+"/members/"+user.getStringID()+"/roles/"+role.getStringID());
+			PermissionUtils.requireHierarchicalPermissions(server,
+					client.getOurUser(), user, Permissions.MANAGE_ROLES);
+			((DiscordClientImpl) client).REQUESTS.DELETE
+					.makeRequest(DiscordEndpoints.GUILDS + server.getStringID()
+							+ "/members/" + user.getStringID() + "/roles/"
+							+ role.getStringID());
 			return true;
 		}
 		return false;
 	}
-	
+
 	public static boolean isDouble(String str) {
 		try {
 			Double.parseDouble(str);
@@ -100,16 +110,16 @@ public class UtilDue {
 			return false;
 		}
 	}
-	
+
 	public static String passedTense(String str) {
 		if (str.endsWith("e"))
-			return str+"d";
+			return str + "d";
 		else
-			return str+"ed";
+			return str + "ed";
 	}
-	
+
 	public static boolean userBannedOnServer(IGuild server, IUser user) {
-		for (IUser bannedUser: server.getBannedUsers()) {
+		for (IUser bannedUser : server.getBannedUsers()) {
 			if (bannedUser.getLongID() == user.getLongID())
 				return true;
 		}

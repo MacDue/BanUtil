@@ -7,7 +7,7 @@ import sx.blah.discord.util.PermissionUtils;
 import xyz.sidetrip.BanUtil;
 import xyz.sidetrip.UtilDue;
 
-public class Kick extends ModCommand{
+public class Kick extends ModCommand {
 
 	public Kick() {
 		super("kick");
@@ -25,16 +25,16 @@ public class Kick extends ModCommand{
 
 	@Override
 	protected boolean performAction(IGuild server, IUser user, String reason) {
-		PermissionUtils.requireHierarchicalPermissions(server, BanUtil.getClient().getOurUser(), 
-																		user, Permissions.KICK);
+		PermissionUtils.requireHierarchicalPermissions(server,
+				BanUtil.getClient().getOurUser(), user, Permissions.KICK);
 		server.kickUser(user, reason);
 		return true;
 	}
-	
+
 	@Override
 	public boolean canUse(IUser user) {
-		return super.canUse(user) 
-				&& UtilDue.hasRole(BanUtil.CONFIG.getServer(), user, BanUtil.CONFIG.getCanKickRole());
+		return super.canUse(user) && UtilDue.hasRole(BanUtil.CONFIG.getServer(),
+				user, BanUtil.CONFIG.getCanKickRole());
 	}
 
 }

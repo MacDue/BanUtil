@@ -15,13 +15,12 @@ public class BanUtil {
 	private static IDiscordClient discordClient;
 	public static final Config CONFIG = new Config();
 	public static final Logger LOGGER = LoggerFactory.getLogger(BanUtil.class);
-	
-	
-	public static IDiscordClient getClient(){
+
+	public static IDiscordClient getClient() {
 		return discordClient;
 	}
-	
-	public static void main(String[] args) throws DiscordException{
+
+	public static void main(String[] args) throws DiscordException {
 		discordClient = getClient(CONFIG.getToken());
 		CONFIG.setClient(discordClient);
 		discordClient.getDispatcher().registerListener(new EventHandler());
@@ -30,7 +29,7 @@ public class BanUtil {
 		discordClient.getDispatcher().registerListener(new WizardListener());
 		addCommands();
 	}
-	
+
 	private static void addCommands() {
 		new xyz.sidetrip.commands.general.Info();
 		new xyz.sidetrip.commands.general.Help();
@@ -41,10 +40,12 @@ public class BanUtil {
 		new xyz.sidetrip.commands.moderation.RevokeWarn();
 		new xyz.sidetrip.commands.moderation.Unmute();
 		new xyz.sidetrip.commands.moderation.Unban();
+		new xyz.sidetrip.commands.owner.Stop();
+		new xyz.sidetrip.commands.owner.Restart();
 	}
-	
-	private static IDiscordClient getClient(String botToken) throws DiscordException
-	{
+
+	private static IDiscordClient getClient(String botToken)
+			throws DiscordException {
 		return new ClientBuilder().withToken(botToken).login();
 	}
 }
