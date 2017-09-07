@@ -1,46 +1,49 @@
 package xyz.sidetrip.commands;
 
 import sx.blah.discord.api.events.IListener;
-import sx.blah.discord.util.DiscordException;
+import sx.blah.discord.handle.obj.IChannel;
+import sx.blah.discord.handle.obj.IMessage;
+import sx.blah.discord.handle.obj.IUser;
+import sx.blah.discord.handle.obj.Permissions;
 import sx.blah.discord.util.MissingPermissionsException;
-import sx.blah.discord.util.RateLimitException;
-import xyz.sidetrip.commands.wizard.InputWizard;
-import xyz.sidetrip.commands.wizard.WizardQuestions;
+import sx.blah.discord.util.RequestBuffer;
+import xyz.sidetrip.BanUtil;
+import xyz.sidetrip.UtilDue;
 import xyz.sidetrip.events.OnCommandEvent;
 
 public class CommandListener implements IListener<OnCommandEvent> {
 
 	@Override
 	public void handle(OnCommandEvent event) {
-		//Messy test code!
-		String testReply = "**Command:** " + event.getCommand()
-				+ "\n **Args length:** " + event.getArgs().length
-				+ "\n **Received arguments:** ";
-		int count = 0;
-		for (String argument : event.getArgs()) {
-			testReply += "``" + argument + "`` ";
-			count++;
+		IMessage message = event.getMessage();
+		IChannel channel = message.getChannel();
+		IUser author = message.getAuthor();
+		
+		if (message.getGuild().getLongID() 
+				!= BanUtil.CONFIG.getServer().getLongID()) 
+		{
+			UtilDue.sendMessage(channel, "I only work for Due!");
+			return;
 		}
-		if (count == 0)
-			testReply += "None";
-		try {
-			event.getMessage().reply(testReply);
-		} catch (MissingPermissionsException | RateLimitException
-				| DiscordException e) {
-			e.printStackTrace();
+		
+		Command command = CommandHandler.getCommand(event.getCommand());
+		if (command != null) {
+			RequestBuffer.request(() -> {
+				try {
+					if (author.getPermissionsForGuild(message.getGuild()).contains(Permissions.ADMINISTRATOR) 
+							|| command.canUse(author)) {
+						command.execute(message, event.getArgs());
+					} else {
+						UtilDue.sendMessage(channel, "You cannot use that command.");
+					}
+				} catch (MissingPermissionsException missingPerms) {
+					UtilDue.sendMessage(channel, ":confounded: I don't have permission to do that!");
+				} catch (Exception exeption) {
+					UtilDue.sendMessage(channel, ":interrobang: **Something went wrong!**");
+					BanUtil.LOGGER.error("Something went wrong in command '{}':", command.getName(), exeption);
+					// exeption.printStackTrace();
+				}
+			});
 		}
-		if (event.matchesCommand("wizard")) {
-			try {
-				event.getMessage().reply("Starting test wizzard!");
-			} catch (MissingPermissionsException | RateLimitException
-					| DiscordException e) {
-				e.printStackTrace();
-			}
-			event.getClient().getDispatcher().registerListener(new InputWizard(
-					event.getMessage().getChannel(),
-					event.getMessage().getAuthor(), WizardQuestions.TEST_QUESTIONS));
-		}
-
 	}
-
 }

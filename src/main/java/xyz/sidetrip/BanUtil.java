@@ -11,26 +11,40 @@ import xyz.sidetrip.commands.CommandListener;
 import xyz.sidetrip.commands.wizard.WizardListener;
 import xyz.sidetrip.events.EventHandler;
 
-public class DueUtil {
+public class BanUtil {
 	private static IDiscordClient discordClient;
-	private static final String BOT_ID = "MjUxODI4NzUxOTc1ODQxNzkz.CxpFUg._maTN2y73Ke1Ce8xQXOMRUmZ3JY";
-	public static final Logger LOGGER = LoggerFactory.getLogger(DueUtil.class);
+	public static final Config CONFIG = new Config();
+	public static final Logger LOGGER = LoggerFactory.getLogger(BanUtil.class);
+	
 	
 	public static IDiscordClient getClient(){
 		return discordClient;
 	}
 	
 	public static void main(String[] args) throws DiscordException{
-		discordClient = getClient(BOT_ID);	
+		discordClient = getClient(CONFIG.getToken());
+		CONFIG.setClient(discordClient);
 		discordClient.getDispatcher().registerListener(new EventHandler());
 		discordClient.getDispatcher().registerListener(new CommandHandler());
 		discordClient.getDispatcher().registerListener(new CommandListener());
 		discordClient.getDispatcher().registerListener(new WizardListener());
+		addCommands();
+	}
+	
+	private static void addCommands() {
+		new xyz.sidetrip.commands.general.Info();
+		new xyz.sidetrip.commands.general.Help();
+		new xyz.sidetrip.commands.moderation.Ban();
+		new xyz.sidetrip.commands.moderation.Kick();
+		new xyz.sidetrip.commands.moderation.Mute();
+		new xyz.sidetrip.commands.moderation.Warn();
+		new xyz.sidetrip.commands.moderation.RevokeWarn();
+		new xyz.sidetrip.commands.moderation.Unmute();
+		new xyz.sidetrip.commands.moderation.Unban();
 	}
 	
 	private static IDiscordClient getClient(String botToken) throws DiscordException
 	{
 		return new ClientBuilder().withToken(botToken).login();
 	}
-
 }

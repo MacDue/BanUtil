@@ -1,11 +1,11 @@
 package xyz.sidetrip.commands.wizard;
 
 import sx.blah.discord.api.events.EventSubscriber;
-import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
-import xyz.sidetrip.DueUtil;
+import xyz.sidetrip.BanUtil;
 import xyz.sidetrip.UtilDue;
 import xyz.sidetrip.events.WizardEndEvent;
 /*
@@ -45,8 +45,8 @@ public class InputWizard {
 	}
 
 	private void endWizzard() {
-		DueUtil.getClient().getDispatcher().dispatch(new WizardEndEvent(this));
-		DueUtil.getClient().getDispatcher().unregisterListener(this);
+		BanUtil.getClient().getDispatcher().dispatch(new WizardEndEvent(this));
+		BanUtil.getClient().getDispatcher().unregisterListener(this);
 	}
 
 	@EventSubscriber
@@ -69,8 +69,7 @@ public class InputWizard {
 	}
 
 	private void addAnswer(String answer) {
-		answers[questionNumber] = answer;
-		questionNumber++;
+		answers[questionNumber++] = answer;
 		askQuestion();
 	}
 

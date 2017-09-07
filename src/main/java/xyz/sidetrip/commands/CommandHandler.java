@@ -2,17 +2,21 @@ package xyz.sidetrip.commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import sx.blah.discord.api.events.EventSubscriber;
-import sx.blah.discord.handle.impl.events.MessageReceivedEvent;
+import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent;
 import sx.blah.discord.handle.obj.IMessage;
 import sx.blah.discord.handle.obj.IUser;
+import xyz.sidetrip.BanUtil;
 import xyz.sidetrip.events.OnCommandEvent;
 
 public class CommandHandler {
-
-	private final static String KEY = "!"; // for testing
+	
+	private static final String KEY = BanUtil.CONFIG.getPrefix();
+	private static Map<String, Command> commands = new HashMap<String, Command>();
 
 	@EventSubscriber
 	public void checkForCommand(MessageReceivedEvent event) {
@@ -25,9 +29,19 @@ public class CommandHandler {
 		if (commandString.length() == 0)
 			return;
 		String[] args = getArgs(commandString);
-		OnCommandEvent commandEvent = new OnCommandEvent(args[0],
+		OnCommandEvent commandEvent = new OnCommandEvent(args[0].toLowerCase(),
 				Arrays.copyOfRange(args, 1, args.length), message, author);
 		event.getClient().getDispatcher().dispatch(commandEvent);
+	}
+	
+	public static void addCommand(Command command) {
+		String commandName = command.getName().toLowerCase();
+		if (commands.get(commandName) == null)
+			commands.put(commandName, command);
+	}
+	
+	public static Command getCommand(String commandName) {
+		return commands.get(commandName);
 	}
 
 	/**
