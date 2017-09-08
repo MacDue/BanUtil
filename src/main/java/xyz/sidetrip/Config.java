@@ -13,7 +13,7 @@ import sx.blah.discord.handle.obj.IUser;
 
 public class Config {
 
-	private final String botToken, prefix;
+	private final String botToken, prefix, restartCommand;
 	private final long modRoleId, canBanRoldId, canKickRoleId, warningRoleId,
 			muteRoleId, logChannelId, serverId, ownerId;
 
@@ -31,46 +31,51 @@ public class Config {
 		serverId = Long.parseLong(config.getProperty("serverId"));
 		ownerId = Long.parseLong(config.getProperty("ownerId"));
 		prefix = config.getProperty("prefix");
+		restartCommand = config.getProperty("restartCommand");
 	}
 
 	public String getToken() {
 		return botToken;
 	}
-	
+
 	public IRole getModRole() {
 		return discord.getRoleByID(modRoleId);
 	}
-	
+
 	public IRole getCanBanRole() {
 		return discord.getRoleByID(canBanRoldId);
 	}
-	
+
 	public IRole getCanKickRole() {
 		return discord.getRoleByID(canKickRoleId);
 	}
-	
+
 	public IRole getWarningRole() {
 		return discord.getRoleByID(warningRoleId);
 	}
-	
+
 	public IRole getMuteRole() {
 		return discord.getRoleByID(muteRoleId);
 	}
-	
+
 	public IChannel getLogChannel() {
 		return discord.getChannelByID(logChannelId);
 	}
-	
+
 	public IGuild getServer() {
 		return discord.getGuildByID(serverId);
 	}
-	
+
 	public IUser getOwner() {
 		return discord.getUserByID(ownerId);
 	}
-	
+
 	public String getPrefix() {
 		return prefix;
+	}
+
+	public String getRestartCommand() {
+		return restartCommand;
 	}
 
 	public void setClient(IDiscordClient client) {
