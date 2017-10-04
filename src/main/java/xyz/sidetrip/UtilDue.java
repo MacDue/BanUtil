@@ -3,6 +3,8 @@ package xyz.sidetrip;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.collections4.map.DefaultedMap;
 
@@ -22,6 +24,9 @@ import sx.blah.discord.util.RequestBuffer;
 
 public class UtilDue {
 
+	private static final String IMAGE_URL_REGEX = "(http(s?):/)(/[^/]+)+\\.(?:jpg|gif|png|jpeg)";
+	public static final Pattern IMAGE_URL_PATTERN = Pattern.compile(IMAGE_URL_REGEX);
+	
 	private static final Map<Long, String> serverKeys = new DefaultedMap<Long, String>(
 			"!");
 
@@ -124,5 +129,15 @@ public class UtilDue {
 				return true;
 		}
 		return false;
+	}
+
+	public static String getImageUrlFromString(String str) {
+		Matcher imageUrlMatcher = UtilDue.IMAGE_URL_PATTERN.matcher(str);
+		imageUrlMatcher.find();
+		try {
+			return imageUrlMatcher.group();
+		} catch (IllegalStateException e) {
+			return null;
+		}
 	}
 }

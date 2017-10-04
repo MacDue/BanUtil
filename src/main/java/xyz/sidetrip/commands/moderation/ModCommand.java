@@ -2,10 +2,11 @@ package xyz.sidetrip.commands.moderation;
 
 import java.util.Arrays;
 import java.util.Calendar;
-
+import java.util.List;
 import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IMessage;
+import sx.blah.discord.handle.obj.IMessage.Attachment;
 import sx.blah.discord.handle.obj.IUser;
 import sx.blah.discord.util.EmbedBuilder;
 import xyz.sidetrip.BanUtil;
@@ -71,7 +72,16 @@ public abstract class ModCommand extends Command {
 								+ " " + actionParts[1].toLowerCase()
 										.replace("user", user.mention())
 								+ "!");
-				logAction(context.getAuthor(), user, reason);
+
+				// Trying to find reason image.
+				String attachedImageUrl = null;
+				List<Attachment> attachments = context.getAttachments();
+				if (attachments.size() == 1)
+					attachedImageUrl = UtilDue.getImageUrlFromString(attachments.get(0).getUrl());
+				if (attachedImageUrl == null)
+					attachedImageUrl = UtilDue.getImageUrlFromString(reason);
+
+				logAction(context.getAuthor(), user, reason, attachedImageUrl);
 			} else {
 				UtilDue.sendMessage(channel,
 						"Could not" + actionInfo[1].toLowerCase()
@@ -80,7 +90,7 @@ public abstract class ModCommand extends Command {
 		}
 	}
 
-	private void logAction(IUser moderator, IUser user, String reason) {
+	private void logAction(IUser moderator, IUser user, String reason, String imageUrl) {
 		Calendar calendar = Calendar.getInstance();
 		IChannel logChannel = BanUtil.CONFIG.getLogChannel();
 		EmbedBuilder logEmbed = new EmbedBuilder();
@@ -91,6 +101,8 @@ public abstract class ModCommand extends Command {
 		logEmbed.appendField("User", userInfo, true);
 		logEmbed.appendField("Moderator", moderator.toString(), true);
 		logEmbed.appendField("Reason", reason, false);
+		if (imageUrl != null)
+			logEmbed.withImage(imageUrl);
 		logEmbed.withFooterText(calendar.getTime().toString());
 		logChannel.sendMessage(logEmbed.build());
 	}
