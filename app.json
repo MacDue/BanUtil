@@ -58,7 +58,10 @@
          "value":"canu"
       }
    },
-   "scripts":{
-      "postdeploy":"heroku ps:scale bot=1"
+   "formation":{
+      "bot":{
+         "quantity":1,
+         "size":"free"
+      }
    }
 }
