@@ -57,5 +57,8 @@
          "description":"The bot's restart prefix.",
          "value":"canu"
       }
+   },
+   "scripts":{
+      "postdeploy":"heroku ps:scale bot=1"
    }
 }

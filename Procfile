@@ -1,1 +1,1 @@
-worker: sh run_heroku.sh 
+bot: sh run_heroku.sh 
