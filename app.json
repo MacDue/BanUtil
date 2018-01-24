@@ -59,6 +59,6 @@
       }
    },
    "scripts":{
-      "postdeploy":"sh run_heroku.sh"
+      "postdeploy":"heroku run bot"
    }
 }
