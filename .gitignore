@@ -1,6 +1,7 @@
 /.gradle/
 /build/
-
+/out/
+run_local_private.sh
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache

@@ -2,11 +2,12 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'application'
     // Allows running "gradle shadowJar" to create an executable JAR of your project
     id 'com.github.johnrengelman.shadow' version '1.2.3'
 }
-group 'MacDue'
-version '1.0.0'
+group 'xyz.sidetrip'
+version '0.1'
 
 sourceCompatibility = 1.8
 
@@ -18,12 +19,25 @@ repositories {
 }
 
 dependencies {
-  
-    compile "com.github.austinv11:Discord4j:2.9.2"
-    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+  compile "com.github.austinv11:Discord4j:2.9.2"
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-    //Discord4J logging
-    compile "ch.qos.logback:logback-classic:1.1.7"
-	// https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
+  // Discord4J logging
+  compile "ch.qos.logback:logback-classic:1.1.7"
 	compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+}
+
+mainClassName = "xyz.sidetrip.banutil.BanUtil"
+
+jar {
+  manifest { 
+    attributes "Main-Class": "$mainClassName"
+  }  
+
+  from {
+    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+  }
+}
+
+task stage {
+    dependsOn jar
 }

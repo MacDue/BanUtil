@@ -16,4 +16,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'Due4J'
+rootProject.name = 'BanUtil'
