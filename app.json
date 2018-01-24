@@ -1,0 +1,61 @@
+{
+   "name":"BanUtil",
+   "description":"A very simple self hosted moderation bot.",
+   "repository":"https://github.com/MacDue/BanUtil",
+   "logo":"https://dueutil.tech/img/BanUtil.png",
+   "keywords":[
+      "discord",
+      "discord-bot",
+      "moderation-bot"
+   ],
+   "env":{
+      "TOKEN":{
+         "description":"A discord bot token.",
+         "value":"PLEASE PUT VALID BOT TOKEN HERE"
+      },
+      "MOD_ROLE_ID":{
+         "description":"The role id of your moderator role.",
+         "value":"MOD ROLE ID HERE"
+      },
+      "CAN_BAN_ROLE_ID":{
+         "description":"The role id of your 'can ban' role.",
+         "value":"CAN BAN ROLE ID HERE"
+      },
+      "CAN_KICK_ROLE_ID":{
+         "description":"The role id of your 'can kick' role.",
+         "value":"CAN KICK ROLE ID HERE"
+      },
+      "WARNING_ROLE_ID":{
+         "description":"The role id of your warning role.",
+         "value":"WARNING ROLE ID HERE"
+      },
+      "MUTE_ROLE_ID":{
+         "description":"The role id of your mute role.",
+         "value":"MUTE ROLE ID HERE"
+      },
+      "LOG_CHANNEL_ID":{
+         "description":"The channel id of your log channel.",
+         "value":"LOG CHANNEL ID HERE"
+      },
+      "SERVER_ID":{
+         "description":"The server id of your server.",
+         "value":"SERVER ID HERE"
+      },
+      "SERVER_ID":{
+         "description":"The server id of your server.",
+         "value":"SERVER ID HERE"
+      },
+      "OWNER_ID":{
+         "description":"Probably your discord id.",
+         "value":"OWNER ID HERE"
+      },
+      "RESTART_COMMAND":{
+         "description":"The bot's restart command.",
+         "value":"sh run_heroku.sh"
+      },
+      "PREFIX":{
+         "description":"The bot's restart prefix.",
+         "value":"canu"
+      }
+   }
+}

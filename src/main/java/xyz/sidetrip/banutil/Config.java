@@ -27,7 +27,7 @@ public class Config {
             logChannelId = Long.parseLong(env.get("LOG_CHANNEL_ID"));
             serverId = Long.parseLong(env.get("SERVER_ID"));
             ownerId = Long.parseLong(env.get("OWNER_ID"));
-            prefix = env.getOrDefault("prefix", "canu");
+            prefix = env.getOrDefault("PREFIX", "canu");
             restartCommand = env.getOrDefault("RESTART_COMMAND", "sh run.sh");
         } catch (Exception e) {
             BanUtil.LOGGER.error(UtilDue.BIG_FLASHY_ERROR
