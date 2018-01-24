@@ -6,3 +6,11 @@ gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache
 config.properties
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
+*.iws
+.idea_modules/
+.idea/**/gradle.xml
+.idea/**/libraries
+
