@@ -59,6 +59,6 @@
       }
    },
    "scripts":{
-      "postdeploy":"heroku run bot"
+      "postdeploy":"heroku ps:restart &"
    }
 }
