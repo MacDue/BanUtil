@@ -90,9 +90,15 @@ public class BanUtilStatusPage {
             }
             statusPage.append(this.getExceptionTraceHTML());
             statusPage.append("<p>Refresh page for updates.</p>");
-            statusPage.append("<p>Get your own BanUtil: <a href=\""+BanUtil.REPO+"\""+">"+BanUtil.REPO+"</a>");
+            statusPage.append("<p>Get your own BanUtil: <a href=\"" + BanUtil.REPO + "\"" + ">" + BanUtil.REPO + "</a>");
             statusPage.append("</body>");
-            return new HttpResponse(statusPage.toString(), HttpStatusCode.OK, HttpMimeType.TXT);
+            return new HttpResponse(statusPage.toString(), HttpStatusCode.OK, HttpMimeType.TXT) {
+                @Override
+                public String format() {
+                    // Should fix make the response standard compliant.
+                    return super.format().replace("\n", "\r\n");
+                }
+            };
         }
     }
 }
