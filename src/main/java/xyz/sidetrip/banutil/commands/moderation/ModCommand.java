@@ -106,4 +106,9 @@ public abstract class ModCommand extends Command {
 		logEmbed.withFooterText(calendar.getTime().toString());
 		logChannel.sendMessage(logEmbed.build());
 	}
+
+	@Override
+	public String toString() {
+		return super.toString()+" @User <reason>";
+	}
 }

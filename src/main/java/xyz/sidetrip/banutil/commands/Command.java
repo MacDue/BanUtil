@@ -20,4 +20,9 @@ public abstract class Command {
 	public boolean canUse(IUser user) {
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "[CMD_KEY] "+this.getName();
+	}
 }

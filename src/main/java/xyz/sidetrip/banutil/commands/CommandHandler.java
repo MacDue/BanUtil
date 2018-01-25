@@ -15,8 +15,8 @@ import xyz.sidetrip.banutil.events.OnCommandEvent;
 
 public class CommandHandler {
 
-	private static final String KEY = BanUtil.CONFIG.getPrefix();
-	private static Map<String, Command> commands = new HashMap<String, Command>();
+	public static final String KEY = BanUtil.CONFIG.getPrefix();
+	private static final Map<String, Command> commands = new HashMap<>();
 
 	@EventSubscriber
 	public void checkForCommand(MessageReceivedEvent event) {
@@ -100,6 +100,10 @@ public class CommandHandler {
 		if (argument.length() > 0)
 			argsList.add(argument);
 		return "";
+	}
+
+	public static Map<String, Command> getCommands() {
+		return commands;
 	}
 
 }

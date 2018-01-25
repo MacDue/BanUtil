@@ -2,6 +2,6 @@ package xyz.sidetrip.banutil;
 
 public class Emojis {
 
-	public static final String BAN = "<:MacBAN:344542864002514945>";
+	public static final String BAN = ":hammer_pick:";
 
 }

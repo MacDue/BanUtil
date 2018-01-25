@@ -54,14 +54,15 @@
          "value":"sh run_heroku.sh"
       },
       "PREFIX":{
-         "description":"The bot's restart prefix.",
+         "description":"The bot's prefix.",
          "value":"canu"
       }
    },
    "formation":{
-      "bot":{
+      "web":{
          "quantity":1,
          "size":"free"
       }
-   }
+   },
+   "success_url": "/"
 }

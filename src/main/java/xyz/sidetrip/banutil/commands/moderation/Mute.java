@@ -30,4 +30,9 @@ public class Mute extends ModCommand {
 		return UtilDue.addRole(server, user, BanUtil.CONFIG.getMuteRole());
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " - adds mute role";
+	}
+
 }

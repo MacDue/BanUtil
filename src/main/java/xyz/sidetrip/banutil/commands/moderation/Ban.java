@@ -33,7 +33,8 @@ public class Ban extends ModCommand {
 		PermissionUtils.requireHierarchicalPermissions(server,
 				BanUtil.getClient().getOurUser(), user, Permissions.BAN);
 		server.banUser(user, reason);
-		return true;
+        BanUtil.STATUS.bansSinceLastRestart++;
+        return true;
 	}
 
 	@Override

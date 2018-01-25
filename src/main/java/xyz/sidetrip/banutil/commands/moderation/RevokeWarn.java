@@ -22,4 +22,8 @@ public class RevokeWarn extends Warn {
 				BanUtil.CONFIG.getWarningRole());
 	}
 
+	@Override
+	public String toString() {
+		return super.toString().replace("adds", "removes");
+	}
 }

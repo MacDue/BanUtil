@@ -5,17 +5,23 @@ import sx.blah.discord.handle.obj.IChannel;
 import sx.blah.discord.handle.obj.IGuild;
 import sx.blah.discord.handle.obj.IRole;
 import sx.blah.discord.handle.obj.IUser;
+
 import java.util.Map;
 
 public class Config {
 
-	private String botToken, prefix, restartCommand;
-	private long modRoleId, canBanRoleId, canKickRoleId, warningRoleId,
-				 muteRoleId, logChannelId, serverId, ownerId;
+    private String botToken, prefix, restartCommand;
+    private long modRoleId, canBanRoleId, canKickRoleId, warningRoleId,
+            muteRoleId, logChannelId, serverId, ownerId;
 
-	private IDiscordClient discord;
+    private IDiscordClient discord;
+    private final BanUtil.Status status;
 
-	protected void load() {
+    public Config(BanUtil.Status status) {
+        this.status = status;
+    }
+
+    protected void load() {
         Map<String, String> env = System.getenv();
         try {
             botToken = env.get("TOKEN");
@@ -32,107 +38,105 @@ public class Config {
         } catch (Exception e) {
             BanUtil.LOGGER.error(UtilDue.BIG_FLASHY_ERROR
                     + "\nBot configuration not or incorrectly set! Please check the read me!\n", e);
-            discord.logout();
-            System.exit(1);
+            status.allGood = false;
+            status.lastError = e;
         }
     }
 
+
     protected boolean validate() {
-	    boolean modRole = getModRole() != null;
-        boolean canBanRole = getCanBanRole() != null;
-        boolean canKickRole = getCanKickRole() != null;
-	    boolean muteRole = getMuteRole() != null;
-        boolean warnRole = getWarningRole() != null;
-        boolean logChannel =  getLogChannel() != null;
-        boolean server =  getServer() != null;
-        boolean owner = getOwner() != null;
-        if (modRole
-                && canBanRole
-                && canKickRole
-                && muteRole
-                && warnRole
-                && logChannel
-                && server
-                && owner) {
-            return true;
-        }
-        String error = UtilDue.BIG_FLASHY_ERROR +"\nConfiguration not valid - errors:\n";
-        if (!modRole) {
+        status.modRoleIncorrect = getModRole() == null;
+        status.canBanRoleIncorrect = getCanBanRole() == null;
+        status.canKickRoleIncorrect = getCanKickRole() == null;
+        status.muteRoleIncorrect = getMuteRole() == null;
+        status.warnRoleIncorrect = getWarningRole() == null;
+        status.logChannelIncorrect = getLogChannel() == null;
+        status.serverIncorrect = getServer() == null;
+        status.ownerIncorrect = getOwner() == null;
+
+        return !(status.modRoleIncorrect || status.canBanRoleIncorrect
+                || status.canKickRoleIncorrect || status.muteRoleIncorrect
+                || status.warnRoleIncorrect || status.logChannelIncorrect
+                || status.serverIncorrect || status.ownerIncorrect);
+    }
+
+    public String getValidationErrors() {
+        // Nothing to see here. Move along.
+        String error = UtilDue.BIG_FLASHY_ERROR + "\nConfiguration not valid - errors:\n";
+        if (status.modRoleIncorrect) {
             error += String.format("Mod role not found with id: %s\n", modRoleId);
         }
-        if (!canBanRole) {
+        if (status.canBanRoleIncorrect) {
             error += String.format("Can ban role not found with id: %s\n", canBanRoleId);
         }
-        if (!canKickRole) {
+        if (status.canKickRoleIncorrect) {
             error += String.format("Can kick not found with id: %s\n", canKickRoleId);
         }
-        if (!muteRole) {
+        if (status.muteRoleIncorrect) {
             error += String.format("Mute role not found with id: %s\n", muteRoleId);
         }
-        if (!warnRole) {
+        if (status.warnRoleIncorrect) {
             error += String.format("Warn role not found with id: %s\n", warningRoleId);
         }
-        if (!logChannel) {
+        if (status.logChannelIncorrect) {
             error += String.format("Log channel not found with id: %s\n", logChannelId);
         }
-        if (!server) {
+        if (status.serverIncorrect) {
             error += String.format("Home server not found with id: %s\n", serverId);
         }
-        if (!owner) {
+        if (status.ownerIncorrect) {
             error += String.format("Owner not found with id: %s\n", ownerId);
         }
         error += "Please fix these errors before starting the bot.\n";
-        BanUtil.LOGGER.error(error);
-        discord.logout();
-        System.exit(1);
-        return false;
-	}
+        error += "If you're getting these errors after a Heroku deploy invite the bot to the server.\n";
+        return error;
+    }
 
-	public String getToken() {
-		return botToken;
-	}
+    public String getToken() {
+        return botToken;
+    }
 
-	public IRole getModRole() {
-		return discord.getRoleByID(modRoleId);
-	}
+    public IRole getModRole() {
+        return discord.getRoleByID(modRoleId);
+    }
 
-	public IRole getCanBanRole() {
-		return discord.getRoleByID(canBanRoleId);
-	}
+    public IRole getCanBanRole() {
+        return discord.getRoleByID(canBanRoleId);
+    }
 
-	public IRole getCanKickRole() {
-		return discord.getRoleByID(canKickRoleId);
-	}
+    public IRole getCanKickRole() {
+        return discord.getRoleByID(canKickRoleId);
+    }
 
-	public IRole getWarningRole() {
-		return discord.getRoleByID(warningRoleId);
-	}
+    public IRole getWarningRole() {
+        return discord.getRoleByID(warningRoleId);
+    }
 
-	public IRole getMuteRole() {
-		return discord.getRoleByID(muteRoleId);
-	}
+    public IRole getMuteRole() {
+        return discord.getRoleByID(muteRoleId);
+    }
 
-	public IChannel getLogChannel() {
-		return discord.getChannelByID(logChannelId);
-	}
+    public IChannel getLogChannel() {
+        return discord.getChannelByID(logChannelId);
+    }
 
-	public IGuild getServer() {
-		return discord.getGuildByID(serverId);
-	}
+    public IGuild getServer() {
+        return discord.getGuildByID(serverId);
+    }
 
-	public IUser getOwner() {
-		return discord.getUserByID(ownerId);
-	}
+    public IUser getOwner() {
+        return discord.getUserByID(ownerId);
+    }
 
-	public String getPrefix() {
-		return prefix;
-	}
+    public String getPrefix() {
+        return prefix;
+    }
 
-	public String getRestartCommand() {
-		return restartCommand;
-	}
+    public String getRestartCommand() {
+        return restartCommand;
+    }
 
-	public void setClient(IDiscordClient client) {
-		discord = client;
-	}
+    public void setClient(IDiscordClient client) {
+        discord = client;
+    }
 }

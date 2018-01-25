@@ -17,4 +17,9 @@ public class Stop extends OwnerCommand {
 		System.exit(0);
 	}
 
+	@Override
+	public String toString() {
+		return super.toString()+" - stops bot";
+	}
+
 }

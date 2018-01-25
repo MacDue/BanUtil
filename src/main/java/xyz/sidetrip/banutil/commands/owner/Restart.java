@@ -27,4 +27,9 @@ public class Restart extends OwnerCommand {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return super.toString()+" - restarts bot";
+	}
+
 }

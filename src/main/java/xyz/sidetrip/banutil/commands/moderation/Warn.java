@@ -30,4 +30,8 @@ public class Warn extends ModCommand {
 		return UtilDue.addRole(server, user, BanUtil.CONFIG.getWarningRole());
 	}
 
+	@Override
+	public String toString() {
+		return super.toString() + " - adds warning role";
+	}
 }

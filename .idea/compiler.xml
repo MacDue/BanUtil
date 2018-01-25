@@ -2,6 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
+      <module name="BanUtil_main" target="1.8" />
+      <module name="BanUtil_test" target="1.8" />
       <module name="Due4J_main" target="1.8" />
       <module name="Due4J_test" target="1.8" />
     </bytecodeTargetLevel>

@@ -20,4 +20,9 @@ public class Unmute extends Mute {
 	protected boolean performAction(IGuild server, IUser user, String reason) {
 		return UtilDue.removeRole(server, user, BanUtil.CONFIG.getMuteRole());
 	}
+
+	@Override
+	public String toString() {
+		return super.toString().replace("adds", "removes");
+	}
 }

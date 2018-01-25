@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Due4J.iml" filepath="$PROJECT_DIR$/.idea/modules/Due4J.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Due4J_main.iml" filepath="$PROJECT_DIR$/.idea/modules/Due4J_main.iml" group="Due4J" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Due4J_test.iml" filepath="$PROJECT_DIR$/.idea/modules/Due4J_test.iml" group="Due4J" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BanUtil.iml" filepath="$PROJECT_DIR$/.idea/modules/BanUtil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BanUtil_main.iml" filepath="$PROJECT_DIR$/.idea/modules/BanUtil_main.iml" group="BanUtil" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BanUtil_test.iml" filepath="$PROJECT_DIR$/.idea/modules/BanUtil_test.iml" group="BanUtil" />
     </modules>
   </component>
 </project>
