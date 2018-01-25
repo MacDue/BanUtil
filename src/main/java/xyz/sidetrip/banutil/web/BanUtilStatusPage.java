@@ -24,7 +24,7 @@ public class BanUtilStatusPage {
         BanUtil.LOGGER.info("Creating status page...");
         this.botStatus = status;
         this.http = new HttpServer(
-                Integer.parseInt(System.getenv().getOrDefault("WEB_PORT", "8080")));
+                Integer.parseInt(System.getenv().getOrDefault("PORT", "8080")));
         this.http.registerHandler("/", new BanUtilStatus());
         this.http.start();
     }
@@ -90,6 +90,7 @@ public class BanUtilStatusPage {
             }
             statusPage.append(this.getExceptionTraceHTML());
             statusPage.append("<p>Refresh page for updates.</p>");
+            statusPage.append("<p>Get your own BanUtil: <a href=\""+BanUtil.REPO+"\""+">"+BanUtil.REPO+"</a>");
             statusPage.append("</body>");
             return new HttpResponse(statusPage.toString(), HttpStatusCode.OK, HttpMimeType.TXT);
         }

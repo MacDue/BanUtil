@@ -67,6 +67,8 @@ public class BanUtil implements Runnable {
 
     public static final long REQUIRED_PERMISSIONS = 298077382;
 
+    public static final String REPO = "https://github.com/MacDue/BanUtil";
+
     /*
     BanUtil! A very simple stateless moderation bot.
     Includes a simple status page to aid with setup.

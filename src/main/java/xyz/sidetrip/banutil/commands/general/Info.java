@@ -27,7 +27,7 @@ public class Info extends Command {
                 + " and I'm all out of bubblegum.");
         info.appendField("BanUtil version", BanUtil.VERSION, true);
         info.appendField("Discord4J version", Discord4J.VERSION, true);
-        info.appendField("Deploy in a click to Heroku!", "https://github.com/MacDue/BanUtil", false);
+        info.appendField("Deploy in a click to Heroku!", BanUtil.REPO, false);
         info.withThumbnail(BanUtil.getClient().getApplicationIconURL());
         context.getChannel().sendMessage(info.build());
     }
