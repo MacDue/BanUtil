@@ -144,12 +144,13 @@ public class BanUtil implements Runnable {
         return new ClientBuilder().withToken(botToken).login();
     }
 
-    public static void main(String[] args) {
-        if (System.getenv().getOrDefault("ENABLE_WEB", "false").equals("true")) {
-            new BanUtilStatusPage(STATUS);
-        }
+    public static void main(String[] args) throws InterruptedException {
         Thread botThread = new Thread(new BanUtil(), "BOT");
         botThread.start();
+        botThread.join();
+        if (System.getenv().getOrDefault("ENABLE_WEB", "false").equals("true")) {
+            discordClient.getDispatcher().registerListener(new BanUtilStatusPage(STATUS));
+        }
     }
 
 }

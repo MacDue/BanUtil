@@ -1,10 +1,10 @@
-
 plugins {
     id 'java'
     id 'idea'
     id 'application'
     // Allows running "gradle shadowJar" to create an executable JAR of your project
     id 'com.github.johnrengelman.shadow' version '1.2.3'
+    id 'net.ltgt.apt' version '0.10'
 }
 group 'xyz.sidetrip'
 version '0.1'
@@ -13,30 +13,33 @@ sourceCompatibility = 1.8
 
 repositories {
     jcenter()
-	maven {
-		url  "https://jitpack.io"
-	}
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 dependencies {
-  compile "com.github.austinv11:Discord4j:2.9.2"
-	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-  compile 'com.github.lucavinci:http:v0.1.2'
-  // Discord4J logging
-  compile "ch.qos.logback:logback-classic:1.1.7"
-	compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compile "com.github.austinv11:Discord4j:2.9.3"
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    compile 'com.github.lucavinci:http:v0.1.2'
+    compile 'com.github.MacDue:UniJ:master-SNAPSHOT'
+    compile "ch.qos.logback:logback-classic:1.1.7"
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    compileOnly 'org.projectlombok:lombok:1.16.21'
+    apt "org.projectlombok:lombok:1.16.21"
 }
 
 mainClassName = "xyz.sidetrip.banutil.BanUtil"
 
-jar {
-  manifest { 
-    attributes "Main-Class": "$mainClassName"
-  }  
 
-  from {
-    configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-  }
+jar {
+    manifest {
+        attributes "Main-Class": "$mainClassName"
+    }
+
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 task stage {
