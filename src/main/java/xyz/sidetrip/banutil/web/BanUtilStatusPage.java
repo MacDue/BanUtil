@@ -18,7 +18,6 @@ public class BanUtilStatusPage {
     Make it's easy to alter users to errors with a Heroku deploy and give them a good invite link.
 
     Please excuse the messy inline HTML.
-
      */
     public BanUtilStatusPage(BanUtil.Status status) {
         BanUtil.LOGGER.info("Creating status page...");
@@ -69,33 +68,33 @@ public class BanUtilStatusPage {
         public HttpResponse onRequest(HttpRequest httpRequest, InetAddress inetAddress) {
             StringBuilder statusPage = new StringBuilder("<body style=\"background-color: #95D3BD;\">");
             if (botStatus.allGood) {
-                statusPage.append(PRE_TAG + BanUtil.WELCOME + "</pre>");
+                statusPage.append(PRE_TAG).append(BanUtil.WELCOME).append("</pre>");
                 statusPage.append("<p>Oh I think you'll find this ban hammer is fully operational.</p>");
-                statusPage.append("<h1 style=\"color:#FF6961\">Bans since last restart: <span style=\"font-size:10px\">10000000000000000000000000000000</span>"
-                        + botStatus.bansSinceLastRestart + "</h1>");
+                statusPage.append("<h1 style=\"color:#FF6961\">Bans since last restart: <span style=\"font-size:10px\">10000000000000000000000000000000</span>")
+                        .append(botStatus.bansSinceLastRestart).append("</h1>");
                 statusPage.append(this.createInviteLinkHTML());
 
             } else {
                 if (botStatus.dead) {
-                    statusPage.append(PRE_TAG + UtilDue.BIG_FLASHY_ERROR + "</pre>");
+                    statusPage.append(PRE_TAG).append(UtilDue.BIG_FLASHY_ERROR).append("</pre>");
                     statusPage.append("<h2>The bot is dead!</h2>");
                     statusPage.append("<p>Check that your token is correct and BanUtil is the latest version (or wait for the bot to login)!</a>");
                 } else {
                     statusPage.append("<h4>Something is not quite right...</h4>");
                     statusPage.append("<b>Config errors:</b><br>");
-                    statusPage.append(PRE_TAG + BanUtil.CONFIG.getValidationErrors() + "</pre><br>");
+                    statusPage.append(PRE_TAG).append(BanUtil.CONFIG.getValidationErrors()).append("</pre><br>");
                     statusPage.append("<b>If you've just deployed (correctly) the bot inviting it should solve these errors!</b><br>");
                     statusPage.append(this.createInviteLinkHTML());
                 }
             }
             statusPage.append(this.getExceptionTraceHTML());
             statusPage.append("<p>Refresh page for updates.</p>");
-            statusPage.append("<p>Get your own BanUtil: <a href=\"" + BanUtil.REPO + "\"" + ">" + BanUtil.REPO + "</a>");
+            statusPage.append("<p>Get your own BanUtil: <a href=\"" + BanUtil.REPO + "\">" + BanUtil.REPO + "</a></p>");
             statusPage.append("</body>");
             return new HttpResponse(statusPage.toString(), HttpStatusCode.OK, HttpMimeType.TXT) {
                 @Override
                 public String format() {
-                    // Should fix make the response standard compliant.
+                    // Make the response standard compliant.
                     return super.format().replace("\n", "\r\n");
                 }
             };

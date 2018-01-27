@@ -28,7 +28,7 @@ public class BanUtil implements Runnable {
         return discordClient;
     }
 
-    public static final String VERSION = "0.1";
+    public static final String VERSION = BanUtil.class.getPackage().getImplementationVersion();
     // Silly
     public static final int BANNING_COLOUR = 0xFF6961;
 
