@@ -1,6 +1,10 @@
 # BanUtil
 
+[![Build Status](https://travis-ci.org/MacDue/BanUtil.svg?branch=master)](https://travis-ci.org/MacDue/BanUtil)
+
 ###### BanUtil is simple a self hosted Discord bot for helping with moderation.
+
+### About
 
 #### Features
  - Mod log with reasons & images.
@@ -17,6 +21,7 @@ Giving someone the ``Moderator`` role will allow them to mute and warn users, an
 
 All actions will be logged in a channel you choose with reasons (that can contain images).
 
+___
 
 ### Setup (Heroku)
 
@@ -25,7 +30,7 @@ All actions will be logged in a channel you choose with reasons (that can contai
 1. [Create a new bot account.](https://discordapp.com/developers/applications/me)
 2. [Sign up for a free Heroku account.](https://signup.heroku.com)
 3. Click the button above.
-4. Fill in the token and role ids. 
+4. Fill in the token and role IDs. 
 5. Click ![deploy](https://i.imgur.com/IJX7Hob.png?1)
 6. Heroku will build and deploy the bot in about 30 seconds.
 7. Click ![view](https://i.imgur.com/Bq1bwoR.png)
@@ -39,6 +44,9 @@ If it does not go away after the bot joins your server (and you refresh the page
 ##### Heroku free "sleeping apps"
 
 Your bot will go to sleep if the status page is not checked in ~30 mins. To wake up your bot just open the page (whatyoucalledtheapp.herokuapp.com).
+
+___
+
 
 ### Setup (self hosted)
 
@@ -77,6 +85,8 @@ export PORT=80
 ```
 Restart the bot and you should see the status page on ``localhost`` / your ip.
 
-#### P.s.
+___
+
+### P.s.
 
 A simple way to get role IDs is to make the role mentionable then type ``\@Role``. It should show something like ``<@&355471059698319363>`` when after you send the message. The ID is the nunber between `<@&` and `>`. To find other IDs enable developer mode (under settings -> appearance), then copy IDs with the context menu.
