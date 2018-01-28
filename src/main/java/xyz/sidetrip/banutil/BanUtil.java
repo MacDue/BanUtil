@@ -5,7 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import sx.blah.discord.api.ClientBuilder;
 import sx.blah.discord.api.IDiscordClient;
+import sx.blah.discord.api.IShard;
 import sx.blah.discord.api.events.EventSubscriber;
+import sx.blah.discord.api.internal.ShardImpl;
 import sx.blah.discord.handle.impl.events.shard.ShardReadyEvent;
 import sx.blah.discord.util.DiscordException;
 import xyz.sidetrip.banutil.commands.CommandHandler;
@@ -17,7 +19,9 @@ import xyz.sidetrip.banutil.commands.owner.Restart;
 import xyz.sidetrip.banutil.commands.owner.Stop;
 import xyz.sidetrip.banutil.commands.wizard.WizardListener;
 import xyz.sidetrip.banutil.web.BanUtilStatusPage;
+import sx.blah.discord.api.internal.DiscordWS;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -101,20 +105,29 @@ public class BanUtil implements Runnable {
     public void onLoginEvent(ShardReadyEvent event) throws InterruptedException{
         IDiscordClient client = event.getClient();
         client.changePlayingText("banning tards!");
-        checkConfig();
+        checkBot();
     }
 
-    private void checkConfig() {
+    private void checkBot() {
         CONFIG.load();
         if (!CONFIG.validate()) {
             STATUS.allGood = false;
+            // If the config fails there is a chance that it's because the WS died.
+            List<IShard> shards = discordClient.getShards();
+            DiscordWS ws = shards.size() > 0 ? ((ShardImpl)shards.get(0)).ws : null;
+            if (ws == null || ws.isNotConnected()) {
+                LOGGER.error("Somehow not connected to Discord... (attempting restart)");
+                discordClient.logout();
+                start();
+                return;
+            }
             LOGGER.error(CONFIG.getValidationErrors());
             LOGGER.info("Checking again in 10 seconds...");
             new Timer().schedule(new TimerTask() {
 
                 @Override
                 public void run() {
-                    checkConfig();
+                    checkBot();
                 }
 
             }, CONFIG_RECHECK_TIMEOUT);
@@ -144,10 +157,16 @@ public class BanUtil implements Runnable {
         return new ClientBuilder().withToken(botToken).login();
     }
 
+
+
     public static void main(String[] args) {
         if (System.getenv().getOrDefault("ENABLE_WEB", "false").equals("true")) {
             new BanUtilStatusPage(STATUS);
         }
+        start();
+    }
+
+    private static void start() {
         Thread botThread = new Thread(new BanUtil(), "BOT");
         botThread.start();
     }
