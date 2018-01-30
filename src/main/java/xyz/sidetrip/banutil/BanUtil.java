@@ -8,6 +8,7 @@ import sx.blah.discord.api.IDiscordClient;
 import sx.blah.discord.api.IShard;
 import sx.blah.discord.api.events.EventSubscriber;
 import sx.blah.discord.api.internal.ShardImpl;
+import sx.blah.discord.handle.impl.events.shard.ReconnectFailureEvent;
 import sx.blah.discord.handle.impl.events.shard.ShardReadyEvent;
 import sx.blah.discord.util.DiscordException;
 import xyz.sidetrip.banutil.commands.CommandHandler;
@@ -108,6 +109,15 @@ public class BanUtil implements Runnable {
         checkBot();
     }
 
+    @EventSubscriber
+    public void onReconnectFail(ReconnectFailureEvent event) {
+        // Discord4J will just abandon and do nothing if the network dies for a bit.
+        if (event.isShardAbandoned()) {
+            LOGGER.error("Shard abandoned.");
+            restart();
+        }
+    }
+
     private void checkBot() {
         CONFIG.load();
         if (!CONFIG.validate()) {
@@ -116,9 +126,8 @@ public class BanUtil implements Runnable {
             List<IShard> shards = discordClient.getShards();
             DiscordWS ws = shards.size() > 0 ? ((ShardImpl)shards.get(0)).ws : null;
             if (ws == null || ws.isNotConnected()) {
-                LOGGER.error("Somehow not connected to Discord... (attempting restart)");
-                discordClient.logout();
-                start();
+                LOGGER.error("Discord dropped connection.");
+                restart();
                 return;
             }
             LOGGER.error(CONFIG.getValidationErrors());
@@ -169,6 +178,12 @@ public class BanUtil implements Runnable {
     private static void start() {
         Thread botThread = new Thread(new BanUtil(), "BOT");
         botThread.start();
+    }
+
+    private static void restart() {
+        LOGGER.info("Restarting Discord client...");
+        discordClient.logout();
+        start();
     }
 
 }
