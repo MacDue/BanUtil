@@ -112,6 +112,7 @@ public class BanUtil implements Runnable {
     @EventSubscriber
     public void onReconnectFail(ReconnectFailureEvent event) {
         // Discord4J will just abandon and do nothing if the network dies for a bit.
+        STATUS.allGood = false;
         if (event.isShardAbandoned()) {
             LOGGER.error("Shard abandoned.");
             restart();
