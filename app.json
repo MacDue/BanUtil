@@ -55,7 +55,13 @@
       },
       "PREFIX":{
          "description":"The bot's prefix.",
-         "value":"canu"
+         "value":"canu",
+         "required": false
+      },
+      "PLAYING_TEXT": {
+        "description":"The bot's status (Playing <something>).",
+        "value": "banning tards!",
+        "required": false
       }
    },
    "formation":{
